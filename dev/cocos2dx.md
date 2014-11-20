@@ -13,6 +13,10 @@ python cocos.py new hellolua -p com.lacoo.game -l lua -d /workspace/
 - -l后面接开发语言类型，有cpp, lua, js三种类型
 - -d后面接项目存放的目录
 
+eclipse环境调试
+
+
+
 
 ##Label
 - freetype
