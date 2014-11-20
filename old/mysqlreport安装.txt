@@ -1,0 +1,29 @@
+参考：http://www.liiyl.com/index.php/archives/538
+
+1.perl安装
+
+perl -v
+通常系统默认有安装
+
+2.DBI安装
+下载：wget http://ftp.cuhk.edu.hk/pub/packages/perl/CPAN/authors/id/T/TI/TIMB/DBI-1.616.tar.gz
+perl Makefile.pl
+make && make install
+
+3.DBD-mysql安装
+wget http://search.cpan.org/CPAN/authors/id/C/CA/CAPTTOFU/DBD-mysql-4.020.tar.gz
+perl Makefile.PL –mysql_config=/usr/local/mysql/bin/mysql_config
+make &&make install
+
+
+4.mysqlreport安装
+wget http://hackmysql.com/scripts/mysqlreport-3.5.tgz
+
+
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+也可以如此安装：
+yum -y install perl
+yum -y install perl-DBI
+yum -y install perl-BDB-MySQL
+
+

@@ -1,0 +1,29 @@
+查看机器的bios时间：
+hwclock [-rw]
+-r：检视目前的 BIOS 时间
+-w：将目前 Linux 的时间写入 BIOS 当中！
+
+
+微软公司授时主机(美国)
+time.windows.com
+
+台警大授时中心(台湾)
+asia.pool.ntp.org
+
+美国标准技术院，采用格灵威时间
+time.nist.gov为
+
+
+同步时间
+ntpdate asia.pool.ntp.org
+
+
+
+crontab -e 
+
+30 06 * * * /usr/sbin/ntpdate time.windows.com;/sbin/hwclock -w
+#每天06:30同步一次
+
+*/60 * * * * /usr/sbin/ntpdate time.windows.com;/sbin/hwclock -w
+#每小时更新
+

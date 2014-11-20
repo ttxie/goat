@@ -1,0 +1,58 @@
+1. 手机要有root权限:
+        http://blog.163.com/cp7618@yeah/blog/static/702347772012381118655/
+
+2. 下载tcpdump   http://www.strazzere.com/android/tcpdump
+
+3. adb push c:\wherever_you_put\tcpdump /data/local/tcpdump
+
+        mv /sdcard/tcpdump /data/local/tcmpdump 出错：
+        failed on 'tcpdump' - Cross-device link
+        解决办法：cat tcpdump >> /data/local/tcpdump
+        chmod 755 tcpdump
+        
+
+4. adb shell chmod 6755 /data/local/tcpdump
+
+5, adb shell,   su获得root权限
+
+6， cd /data/local
+
+7， ./tcpdump -i eth0 -X -s 5100  -w /sdcard/capture.pcap 
+
+8,  adb pull /sdcard/capture.pcap
+
+9,  在电脑上用wireshark打开capture.pcap即可分析log
+
+
+
+
+root办法：
+        zerg：使用系统漏洞获取root权限，有兴趣的朋友可以研究github上的源代码 https://github.com/revolutionary/zergRush/blob/master/zergRush.c。
+        使用"刷机精灵"来获取手机Root最高权限。
+        
+
+adb指令：
+        adb shell
+        adb root
+        adb push
+        adb pull
+        adb install
+        adb reboot
+        adb devices
+        
+
+adb shell /data/local/tcpdump -i eth0 -X -s 5100
+adb shell /data/local/tcpdump -i eth0 -X -s 5100  -w /sdcard/capture.pcap 
+
+
+
+wireshark
+
+参考：
+tcpdump:
+http://www.cnblogs.com/likwo/archive/2012/09/06/2673944.html
+http://blog.csdn.net/kaizi318/article/details/7518082
+adb: http://bbs.shendu.com/forum.php?mod=viewthread&tid=2325084
+root:http://blog.163.com/cp7618@yeah/blog/static/702347772012381118655/
+
+

@@ -1,0 +1,61 @@
+(上传)服务器向目标服务器推送数据：
+
+rsync -vzrtopg -e ssh /home/vasgame/ad/fu/ root@222.187.220.138:/home/vasgame/ad/fu/
+
+
+(上传))客户端向服务器推送数据：
+inotify:上传模式
+rsync -vzrtopg  --delete /home/vasgame/ad/fu/ rsync@222.187.222.62::web
+
+
+
+
+
+目前采用该模式：
+
+服务器启动：
+/usr/bin/rsync --daemon  --config=/etc/rsyncd.conf
+
+(下载)客户端向服务器拉数据：
+
+列表：
+rsync rsync@222.187.222.62::web
+
+归档：
+rsync -av rsync@222.187.222.62::web
+
+同步：
+/usr/bin/rsync -vzrtopg --delete --progress rsync@222.187.222.62::web /home/vasgame/ad/fu/ --password-file=/etc/rsync_client.passwd
+
+
+
+
+r:子目录递归
+z:压缩
+v:详细信息
+o:保持文件属主信息
+g:保持文件属组信息
+t:保持文件时间信息
+p:保持文件权限
+a:归档
+
+
+--progress 显示备份过程
+--delete是指如果服务器端删除了这一文件，那么客户端也相应把文件删除，
+--exclude "logs/" 表示不对/www/logs目录下的文件进行备份。
+--password-file=/etc/rsync.pass　　密码文件，只保存密码
+
+
+
+
+在 /etc/crontab 下加入
+*/1 * * * * /usr/bin/rsync -zrtog --delete --progress rsync@124.172.243.213::web /www/ --password-file=/etc/rsync_client.passwd
+*/1 * * * * 
+表示每一分钟同步一次
+
+
+/etc/rsync_client.passwd
+该文件只存密码
+
+权限文件chmod 600 passwd
+
