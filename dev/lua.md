@@ -122,8 +122,9 @@ hello apple	1
     print(#a)  ===> 0
 ```
 
+- 对table的使用，要预先分配大小，减少rehash。当我们把新的见解给table额的时候，若数组合哈希表已经满了，更会触发一个再哈希，再哈希的代价是高昂的，首先会在内存中分配一个新的长度的数组，然后将所有记录再全部哈希一遍，将原来的记录转移到新数组中。
+
  - table空判断：
- 
 ```
 a = {}; b = {}
 a['abc'] = 100
@@ -147,7 +148,6 @@ local items = { apple=true, orange=true, pear=true, banana=true }
 if (items.apple) .... 
 ```
  - table遍历
- 
 ```
 a = {}
 for k,v in pairs(a) do
@@ -164,7 +164,6 @@ lua_rawset:
 用法同lua_settable,但更快(因为当key不存在时不用访问元方法__newindex)
 
 - 序列化双向转换:参考：
-
 ```
 function tostring(tt)
     local l={}
@@ -204,11 +203,11 @@ function print_r(root)
     end
     print(_dump(root, "",""))
 end
-
 ```
 http://blog.csdn.net/icyday/article/details/8099197
 
 skynet/lualib/logger.lua
+
 
 
 ###函数
