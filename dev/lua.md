@@ -6,14 +6,12 @@
  - 不等于 ~=
  - 尽量不要用_大写字母，LUA有特殊用途。
  - 行注释- -, 块注释：
-  
 ```
 --[[   
 .....    
 --]]
 ```
 取消注释的话，加多一横：
-
 ```
 ---[[
 ......
@@ -23,7 +21,6 @@
 
 
  - 直接执行lua的头一行加入：
- 
 ```
 #!/usr/local/bin/lua
 或者
@@ -800,10 +797,6 @@ Read all the other files as you see references to them. Don't let your stack get
 
 在线交叉阅读链接
 http://www.lua.org/source/5.1/
-
-
-
-
 
 
 
