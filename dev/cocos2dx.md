@@ -1,7 +1,16 @@
-# cocos2d-x
 
+# cocos2d-x 3.2
 ##创建项目
-进入到目录cocos2d-x-3.2alpha0/tools/cocos2d-console/bin/cocos.py
+官方文档
+```
+$ cd cocos2d-x
+$ ./setup.py
+$ source .bash_profile
+$ cocos new MyGame -p com.your_company.mygame -l cpp -d NEW_PROJECTS_DIR
+$ cd NEW_PROJECTS_DIR/MyGame
+```
+
+也可以进入到目录cocos2d-x-3.2alpha0/tools/cocos2d-console/bin/cocos.py
 打开终端运行cocos.py脚本创建文件
 ```
 python cocos.py new hellolua -p com.lacoo.game -l lua -d /workspace/
@@ -13,7 +22,37 @@ python cocos.py new hellolua -p com.lacoo.game -l lua -d /workspace/
 - -l后面接开发语言类型，有cpp, lua, js三种类型
 - -d后面接项目存放的目录
 
-eclipse环境调试
+
+## 编译
+###命令行编译
+```
+cocos run -p android -j4  (编译时间7分钟)
+cocos run -p ios
+cocos run -p mac
+cocos run -p win32
+```
+
+- helloworld项目编译的项目包大小：
+	模板例子生成的apk文件大小： 6.5M
+		其中还没有压缩的源代码(不含cocos2dx及底层)图片文件大小1.1M
+		libcocos2dlua.so：18.2M
+		
+	删除了curl后，apk文件大小：5.7M
+		libcocos2dlua.so：16.5M
+	Asset更新用到curl，Asset功能将不能再使用
+	
+	天天挂机的libcocos2dlua.so文件9.4M
+
+
+- quick如何缩小包体积
+为了制作小包，特意给 quick-cocos2d-x 2.2.5plus 增加了模块化编译能力。
+当禁用所有可选扩展后，libgame.so 的体积缩小到了惊人的 2780K，压缩到 apk 后仅占 1100K 字节（也就是 1M 多一点点）。
+屏蔽的扩展包：
+
+
+
+
+###eclipse环境编译
 
 
 
@@ -53,12 +92,14 @@ eclipse环境调试
 
 
 
-
 ## 粒子系统
 
 mac： ParticleDesigner 破解版
 
 Particle Editor for Cocos2dx：http://games.v-play.net/particleeditor/
+
+
+##音频
 
 
 
