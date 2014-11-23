@@ -23,7 +23,7 @@ python cocos.py new hellolua -p com.lacoo.game -l lua -d /workspace/
 - -d后面接项目存放的目录
 
 
-## 编译
+## 编译及最小化.so
 ###命令行编译
 ```
 cocos run -p android -j4  (mac air编译时间7分钟)
@@ -42,7 +42,7 @@ cocos run -p win32
 	Asset更新用到curl，Asset功能将不能再使用
 	
 	天天挂机的libcocos2dlua.so文件9.4M
-	刀塔传奇的libhellolua.so5M
+	刀塔传奇的libhellolua.so 5.4M
 
 如果你是3.0的话： base\ccConfig.h 中可以设置各个宏开关 比如不要物理： 
 ```
@@ -51,7 +51,7 @@ cocos run -p win32
 #endif 
 ```
 >修改makefile去掉 curl 支持，去掉物理引擎，去掉webp支持和sqlite，  libcocos2dcpp.so可以在2.5mb左右 
-
+但是我实际操作apk文件大小极限4.3M， libcocos2dlua.so（12.7M）
 
 - quick如何缩小包体积
 	为了制作小包，特意给 quick-cocos2d-x 2.2.5plus 增加了模块化编译能力。
@@ -60,13 +60,15 @@ cocos run -p win32
 
 	默认空白的项目生产的APK文件大小：3.3M， libgame.so(8.5M)
 	
-	关闭：curl，tiff，filters，sqllite，physics，webp, dragonbones, ccb后生成的APK文件大小：1.8M
+	关闭：curl，tiff，filters，sqllite，physics，webp,  dragonbones,  ccb后生成的APK文件大小：1.8M
 	libgame.so(4.8M)
 
 	
 >	参考：[quick v2 最后的疯狂，最小化so](http://quick.cocos.org/?p=1678)
 
-	
+世界OL：7.52M(Android)
+2048手游：1.9M(Android)，3.5M(iOS)
+
 
 ###eclipse环境编译
 cocos compile编译好so文件，再通过eclipse打开android的项目：
@@ -138,16 +140,12 @@ public:
 - freetype
 3.0cocos2dx开始使用freetype作为文字的处理核心，开始支持：阴影，边框，荧光效果实现，边框和荧光需要TTF字库的支持。以前通过每个文字生成一张图片，没有缓存，性能低下。
 
-
 - 自定义实现：下划线超链文本控件
-
 
 - 富文本实现
 ```
     local _richtext = ccui.RichText:create()
-
     _richtext:ignoreContentAdaptWithSize(false)  
-
     _richtext:setContentSize(cc.size(300, 100))
     _richtext:align(display.CENTER, display.cx, display.cy-100)
 
@@ -155,15 +153,11 @@ public:
     local re2 = ccui.RichElementText:create( 2, cc.c3b(255, 255,   0), 255, "And this 中文中文.", "Helvetica", 20 )  
     local reimg = ccui.RichElementImage:create( 6, cc.c3b(255, 255, 255), 255, "lock.png" )  
 
-
     _richtext:pushBackElement(re1)  
     _richtext:pushBackElement(re2)  
     _richtext:pushBackElement(reimg) 
-
     _richtext:addTo(self)   
 ```
-
-
 
 ## UI编辑器
 
