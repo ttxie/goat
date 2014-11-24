@@ -119,6 +119,32 @@ public:
 	- 如果属性不是一个bool值，将会有 setProperty(type) 和 getProperty() 方法。比如： void Sprite::setTexture(Texture2D*) 和 Texture2D* CCSprite::getTexture()。
 
 
+##cocos2dx3.0更新重点
+
+###渲染流水线
+* 从渲染器中把场景图形解耦出来。
+访问节点时发布图形命令，并把它们添加到一个队列上，但实际上不调用任何OpenGL的渲染代码，由下面的后台线程处理执行。
+
+* 分形几何选择裁剪视图
+精灵（Sprite）以及一般的几何图形，如果它们不出现在摄影机的视图范围内，会自动被当前帧移除，不会被选人呢
+
+* 渲染线程 所有渲染执行的执行（如：OpenGL调用）会被移到别的线程中执行，而不是在主线程中执行（这将有助于并行处理，更好的利用多核CPU的能力）
+
+* 自动化批处理
+有效地较少绘图调用次数，自动将绘图调用尽可能地成批处理（如：使用同一纹理的精灵）。
+
+* 基于节点的自定义渲染
+在当前的Cocos版本中，开发者能够按需在每个节点的基础上自定义渲染，直接调用OpenGL命令，不顾官方的渲染器（不过很可能导致性能减弱）。
+
+
+> [Cocos2d-x v3.0 渲染流水线 路线图](http://cn.cocos2d-x.org/tutorial/show?id=1558)
+
+###New Label
+* 发光、阴影和轮廓效果的支持。
+* 使用freetype2为标签生成纹理，这种方式提升了生成字体的速度并保证了字体在不同平台下有相同的效果。
+
+> [Cocos2d-x v3.x中的New Label](http://cn.cocos2d-x.org/tutorial/show?id=1446)
+
 ##cocos2dx内存优化
 
 - 一帧一帧载入游戏资源，通过CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();来观察纹理的内存占用情况
