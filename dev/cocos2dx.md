@@ -73,7 +73,7 @@ cocos run -p win32
 ###eclipse环境编译
 cocos compile编译好so文件，再通过eclipse打开android的项目：
 1. hello/frameworks/runtime-src/pro.android
-2. hello/framework/cocos2d-x/cocos/platform/android/java
+2. hello/framework/cocos2d-x/cocos/platform/android/java，或者直接复制源码过去
 
 编译运行即可以跑起来。
 
@@ -140,33 +140,22 @@ public:
 > [Cocos2d-x v3.0 渲染流水线 路线图](http://cn.cocos2d-x.org/tutorial/show?id=1558)
 
 ###New Label
-* 发光、阴影和轮廓效果的支持。
+* 发光、阴影和轮廓效果的支持，边框和荧光需要TTF字库的支持。
 * 使用freetype2为标签生成纹理，这种方式提升了生成字体的速度并保证了字体在不同平台下有相同的效果。
+2.0版本对文字生成一张图片，没有缓存，性能低下。
 
 > [Cocos2d-x v3.x中的New Label](http://cn.cocos2d-x.org/tutorial/show?id=1446)
 
-##cocos2dx内存优化
-
-- 一帧一帧载入游戏资源，通过CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();来观察纹理的内存占用情况
-- 减少绘制调用，使用“CCSpriteBatchNode”
-- 载入纹理时按照从大到小的顺序
-- 避免高峰内存使用
-- 使用载入屏幕预载入游戏资源
-- 需要时释放空闲资源
-- 收到内存警告后释放缓存资源.
-- 使用纹理打包器优化纹理大小、格式、颜色深度等
-- 使用JPG格式要谨慎！
-- 请使用RGB4444颜色深度16位纹理
-- 请使用NPOT纹理，不要使用POT纹理
-- 避免载入超大纹理
-- 推荐使用MP3数据格式的音频文件，因为Android平台和iOS平台均支持MP3格式，音频文件采样率大约在96-128kbps为佳，比特率44kHz就够了。
-- 使用的是苹果的工具“Allocation & Leaks”。你可以在Xcode中长按“Run”命令，选择“ Profile ”来启动这两个工具。使用Allocation工具可以监控应用的内存使用，使用Leaks工具可以观察内存的泄漏情况。
+##场景
+* 尽量少做场景的切换，让切换在层里面完成。
+* 场景切换注意，旧的场景onexit()释放，在新场景的init()之后，新场景的onEnterTransitionDidFinish()之前。
+（1）像背景图这种只能放到init中，像场景切换时要看到的一些精灵，必须放到init中，不然场景切换时会看不到背景或者一些精灵。
+（2）象精灵的一些动画，动作，可以放到onEnterTransitionDidFinish中来初始化。
+* 对于有好几个层的场景，在init的时候，先加载第一个层的，而不是把所有层的东西全部加载完，在切换层的时候再加载相对应的层
 
 ##Label
-- freetype
-3.0cocos2dx开始使用freetype作为文字的处理核心，开始支持：阴影，边框，荧光效果实现，边框和荧光需要TTF字库的支持。以前通过每个文字生成一张图片，没有缓存，性能低下。
 
-- 自定义实现：下划线超链文本控件
+- todo: 自定义实现：下划线超链文本控件
 
 - 富文本实现
 ```
@@ -185,6 +174,17 @@ public:
     _richtext:addTo(self)   
 ```
 
+##音频
+
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
+
+
 ## UI编辑器
 
 
@@ -196,12 +196,20 @@ mac： ParticleDesigner 破解版
 > Particle Editor for Cocos2dx：http://games.v-play.net/particleeditor/
 
 
-##音频
+##cocos2dx内存优化
 
-
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+- 一帧一帧载入游戏资源，通过CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();来观察纹理的内存占用情况
+- 减少绘制调用，使用“CCSpriteBatchNode”
+- 载入纹理时按照从大到小的顺序
+- 避免高峰内存使用
+- 使用载入屏幕预载入游戏资源
+- 需要时释放空闲资源
+- 收到内存警告后释放缓存资源.
+- 使用纹理打包器优化纹理大小、格式、颜色深度等
+- 使用JPG格式要谨慎！
+- 请使用RGB4444颜色深度16位纹理
+- 请使用NPOT纹理，不要使用POT纹理
+- 避免载入超大纹理
+- 推荐使用MP3数据格式的音频文件，因为Android平台和iOS平台均支持MP3格式，音频文件采样率大约在96-128kbps为佳，比特率44kHz就够了。
+- 使用的是苹果的工具“Allocation & Leaks”。你可以在Xcode中长按“Run”命令，选择“ Profile ”来启动这两个工具。使用Allocation工具可以监控应用的内存使用，使用Leaks工具可以观察内存的泄漏情况。
 
