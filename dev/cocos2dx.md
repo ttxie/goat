@@ -153,6 +153,114 @@ public:
 （2）象精灵的一些动画，动作，可以放到onEnterTransitionDidFinish中来初始化。
 * 对于有好几个层的场景，在init的时候，先加载第一个层的，而不是把所有层的东西全部加载完，在切换层的时候再加载相对应的层
 
+##层
+
+addChild( Node *child, int zOrder, int tag )
+
+* Child：参数就是节点。对于场景而言，通常我们添加的节点就是层。
+* zOrder：先添加的层会被置于后添加的层之下。如果需要为它们指定先后次* 序，可以使用不同的zOrder值。
+* tag：是元素的标识号码，如果为子节点设置了tag值，就可以在它的父节点中利用tag值就可以找到它了。
+层可以包含任何Node作为子节点，包括Sprites(精灵), Labels(标签)，甚至其他的Layer对象。
+
+tag[重要]，ccs的布局需要用到：
+```
+sceneGame:addChild(layer2, 2, 2);
+
+local ly = sceneGame:getChildByTag(2)
+ly:setPosition(ccp(500,50))
+```
+
+##调度器
+
+sharedDirector:getScheduler():scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused)
+
+第一个参数是你要注册的回调函数，第二个是执行该函数循环的秒数，第三个参数是是否暂停。
+一般使用例子：scheduleScriptFunc(callbackFunc,0,false)即可。
+
+
+##通知中心
+      
+    local function onEnter()
+        cclog("ON ENTER")
+        CCNotificationCenter:sharedNotificationCenter():registerScriptObserver(ccLayer, testNotificationHandler, LUA_TEST_MSG)
+        CCNotificationCenter:sharedNotificationCenter():registerScriptObserver(ccLayer, testNotificationHandler2, LUA_TEST_MSG)
+    end
+    
+    local function onExit()
+        cclog("ON EXIT")
+        CCNotificationCenter:sharedNotificationCenter():unregisterScriptObserver(ccLayer, LUA_TEST_MSG)
+    end
+
+
+##CCNode
+
+放大缩小：
+node:setScale(node:getScale()*2)
+
+倾斜：
+node:setSkewX(20)
+
+按钮事件：
+```
+    node:setTouchEnabled(true)
+    node:setTouchSwallowEnabled(false)  --默认ture，不透传
+    node:setTouchMode(TOUCH_MODE_ONE_BY_ONE) --默认TOUCH_MODE_ONE_BY_ONE
+    node:addNodeEventListener(NODE_TOUCH_EVENT, function (event)
+        if event.name == "began" then
+             print("spriter began")
+             node:setScale(node:getScale()*2)
+        elseif event.name == "moved" then
+            print("spriter moved")
+        elseif event.name == "ended" then
+             print("spriter ended")
+             node:setScale(node:getScale()/2)
+        end
+ 
+        return true
+    end)
+```
+
+NODE_TOUCH_CAPTURE_EVENT与NODE_TOUCH_EVENT
+1.CAPTURE事件用于捕获TOUCH事件，因此优先于TOUCH事件触发；
+2.CAPTURE事件不像TOUCH事件按照显示层级来分发，而是按照节点层级关系，多次循环分发；
+3.CAPTURE事件began不返回true，则吞噬自身和其子节点的TOUCH事件，但依旧按照节点层级多次循环分发CAPTTURE事件。
+
+简单来说，CAPTURE事件的分发顺序，类似于Node的OnEnter事件，父节点优先触发，然后子节点，最后子子节点。
+但又不同于Node事件，CAPTURE事件存在一个循环分发的机制，一个began可能会触发多次。
+
+
+
+
+如何让背景变暗?    以及中心区域变亮，边缘昏暗？
+如何让spriter不超出size?
+
+设置记录到json文件?
+
+helper:
+  音效，背景音乐
+  开关设置
+  音量设置（后期）
+
+超链链接文字，RichText斜体
+
+文字出场特效
+
+示例：
+http://blog.csdn.net/crayondeng/article/category/1622039
+
+http://code4app.com/ios/%E6%A8%A1%E4%BB%BF%E5%90%88%E9%87%91%E5%BC%B9%E5%A4%B4Demo/50b1d3246803faac0a000000
+
+
+
+##ScrollView ScrollTable
+
+
+http://blog.csdn.net/crayondeng/article/details/12887173
+
+http://cocos2d.9tech.cn/news/2014/0331/40138.html
+
+
+
 ##Label
 
 - todo: 自定义实现：下划线超链文本控件
@@ -213,3 +321,18 @@ mac： ParticleDesigner 破解版
 - 推荐使用MP3数据格式的音频文件，因为Android平台和iOS平台均支持MP3格式，音频文件采样率大约在96-128kbps为佳，比特率44kHz就够了。
 - 使用的是苹果的工具“Allocation & Leaks”。你可以在Xcode中长按“Run”命令，选择“ Profile ”来启动这两个工具。使用Allocation工具可以监控应用的内存使用，使用Leaks工具可以观察内存的泄漏情况。
 
+
+
+
+
+
+
+
+##quick debug
+
+在lua中使用print()打印log没有任何响应，请教各位大侠怎么解决。
+我使用的是mac系统，xcode5.1.
+
+已解决
+1.定义宏COCOS2D_DEBUG=1
+2.把Build configuration设为debug 
