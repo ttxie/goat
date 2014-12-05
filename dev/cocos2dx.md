@@ -295,7 +295,8 @@ http://cocos2d.9tech.cn/news/2014/0331/40138.html
 
 ## UI编辑器
 
-
+cocos studio对应版本
+http://www.cocoachina.com/bbs/read.php?tid=182077
 
 ## 粒子系统
 
@@ -333,6 +334,6 @@ mac： ParticleDesigner 破解版
 在lua中使用print()打印log没有任何响应，请教各位大侠怎么解决。
 我使用的是mac系统，xcode5.1.
 
-已解决
+解决办法
 1.定义宏COCOS2D_DEBUG=1
 2.把Build configuration设为debug 
