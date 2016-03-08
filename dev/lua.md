@@ -26,7 +26,7 @@
 或者
 #!/usr/bin/env lua
 ```
- - 真假判断：if (0) == true
+ - 真假判断：if (0) == true   if (1) == true  if (nil) == false
 
 ```
 if (0) then
