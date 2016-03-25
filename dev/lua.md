@@ -47,17 +47,25 @@ end
 
 - and or
 a and b -- 如果a 为false，则返回a，否则返回b
+
 a or b -- 如果a 为true，则返回a，否则返回b
 
 一个很实用的技巧：如果x 为false 或者nil 则给x 赋初始值v
+```
 x = x or v
+```
 等价于
+```
 if not x then x = v  end
-
+```
 C 语言中的三元运算符
+```
 a ? b : c
+```
 在Lua 中可以这样实现：
+```
 (a and b) or c
+```
 
 
 ###字符串
